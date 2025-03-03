@@ -8,7 +8,11 @@ use App\Http\Controllers\ProductApiController;
 use App\Http\Controllers\ValidationController;
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
+});
+
+Route::get('/kategori', function () {
+    return view('kategori');
 });
 
 Route::get('/validation/login', [ValidationController::class, 'formLogin'])->name('formLogin');
