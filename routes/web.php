@@ -11,9 +11,7 @@ Route::get('/', function () {
     return view('home');
 });
 
-Route::get('/kategori', function () {
-    return view('kategori');
-});
+
 
 Route::get('/validation/login', [ValidationController::class, 'formLogin'])->name('formLogin');
 Route::post('/login', [ValidationController::class, 'login'])->name('login');
