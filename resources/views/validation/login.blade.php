@@ -88,9 +88,9 @@
                     @endif
 
                     <div class="w-full flex flex-row-reverse">
-                        <button type="submit"
-                            class="cursor-pointer w-max h-max px-14 py-2 bg-purple-700 rounded-full text-white font-bold ml-10 mt-5">
-                            Login</button>
+                        <a href="{{ route('index') }}" class="cursor-pointer w-max h-max px-14 py-2 bg-purple-700 rounded-full text-white font-bold ml-10 mt-5">
+                                Login
+                        </a>
                     </div>
 
                 </form>

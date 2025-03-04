@@ -51,33 +51,33 @@
             Kategori
           </p>
         </li>
+
         <li>
 
-          <a href="#" class="flex items-center pl-10 py-2 text-slate-600 hover:text-[#B2A5FF]">
+          <a href="{{ route('getByCategory', ['category' => 'electronics']) }}" class="flex items-center pl-10 py-2 text-slate-600 hover:text-[#B2A5FF]">
 
-            Barang Elektronik
-
+            Electronics
 
           </a>
         </li>
         <li>
-          <a href="#" class="flex items-center pl-10 py-2 text-slate-600 hover:text-[#B2A5FF]">
+          <a href="{{ route('getByCategory', ['category' => "men's clothing"]) }}" class="flex items-center pl-10 py-2 text-slate-600 hover:text-[#B2A5FF]">
 
-            Pakaian Pria
-
-          </a>
-        </li>
-        <li>
-          <a href="#" class="flex items-center pl-10 py-2 text-slate-600 hover:text-[#B2A5FF]">
-
-            Pakaian Wanita
+            Men Clothes
 
           </a>
         </li>
         <li>
-          <a href="#" class="flex items-center pl-10 py-2 text-slate-600 hover:text-[#B2A5FF]">
+          <a href="{{ route('getByCategory', ['category' => "women's clothing"]) }}" class="flex items-center pl-10 py-2 text-slate-600 hover:text-[#B2A5FF]">
 
-            Perhiasan
+            Women Clothes
+
+          </a>
+        </li>
+        <li>
+          <a href="{{ route('getByCategory', ['category' => 'jewelery']) }}" class="flex items-center pl-10 py-2 text-slate-600 hover:text-[#B2A5FF]">
+
+            Jewelery
 
           </a>
         </li>
@@ -92,9 +92,9 @@
           </p>
         </li>
         <li>
-          <a href="#" class="flex items-center pl-10 py-2 text-slate-600 hover:text-[#B2A5FF]">
+          <a href="{{ route('index') }}" class="flex items-center pl-10 py-2 text-slate-600 hover:text-[#B2A5FF]">
 
-            Kembali ke Beranda
+            Back to Home
 
           </a>
         </li>
@@ -151,32 +151,24 @@
 
   </div>
 
+  @if (count($products) > 0)
+
+
   <div
-    class="card-top-produk ml-72 grid justify-items-stretch w-full max-w-2xs py-3 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
+    class=" ml-72 grid grid-cols-3 gap-8 text-wrap py-5 px-5 border border-gray-200 rounded-lg shadow-sm">
 
-
-    <h5 class="mb-2 ml-5 justify-self-start text-2xl font-bold tracking-tight text-gray-900 ">
-      Flash Sale
-    </h5>
-
-    <img class="rounded-t-lg justify-self-center" src="{{ asset('images/pakaianpria.png') }}" width="200"
-      alt="" />
-
-    <div class="px-5 pt-3">
-
-      <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900">Pakaian Pria</h5>
-      <div class="flex justify-between items-center">
-        <p class="font-medium text-gray-700 dark:text-gray-400">Harga</p>
-        <button data-modal-target="popup-modal" data-modal-toggle="popup-modal" type="button"
-          class="flex justify-center items-center gap-2 px-5 py-2 ml-5 text-sm font-medium text-center text-black bg-[#B3A6FF] rounded-lg focus:ring-4 focus:outline-none focus:ring-blue-300">
-          Beli
-          <i class="fa-solid fa-cart-shopping"></i>
-          </svg>
-        </button>
-      </div>
+    @foreach($products as $product)
+    <div class="bg-white p-4 shadow rounded-lg text-center  card-top-produk">
+        <img src="{{ $product['image'] }}" alt="{{ $product['title'] }}" class="w-full h-40 object-contain mb-2"><br>
+        <h3 class="line-clamp-4 font-semibold">{{ $product['title'] }}</h3><br>
+        <h3 class="line-clamp-4 font-semibold"> Description : {{ $product['description'] }}</h3>
+        <h3 class="line-clamp-4 font-semibold">Category : {{ $product['category'] }}</h3>
+        <h3 class="line-clamp-4 font-semibold"><span class="text-yellow-500 px-2">★</span> {{ $product['rating']['rate'] }} ({{ $product['rating']['count'] }} Viewers) Price : ${{ $product['price'] }}</h3>
     </div>
-
+@endforeach
   </div>
+
+  @endif
 
   <div id="popup-modal" tabindex="-1"
     class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
@@ -212,10 +204,6 @@
       </div>
     </div>
   </div>
-
-
-
-
   <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
 </body>
 

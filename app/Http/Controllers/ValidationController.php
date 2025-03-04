@@ -28,10 +28,9 @@ class ValidationController extends Controller
             Session::put('logged_in', true);
             Session::put('user_email', $this->user['email']);
 
-            return redirect()->route('dashboard')->with('success', 'Login berhasil!');
+            return view('indexDetail');
         }
 
-        return back()->withErrors(['email' => 'Email atau password salah!'])->withInput();
     }
 
     function formRegister()

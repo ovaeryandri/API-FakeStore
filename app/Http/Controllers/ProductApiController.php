@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Product;
+
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
+
 
 class ProductApiController extends Controller
 {
@@ -12,51 +15,92 @@ class ProductApiController extends Controller
      */
     public function index()
     {
-        $products = Product::getAllProducts();
+        $response = Http::get("https://fakestoreapi.com/products");
+        $products = collect($response->json());
 
-        return response()->json([
-            'status' => 'success',
-            'data' => $products
-        ]);
+        $categoryProducts = $products->whereIn('id', [1, 2, 3, 4])->values();
+
+        $topProducts = $products->whereIn('id', [5, 6, 7, 8, 9, 10])->values();
+
+        $selectedProduct = [];
+
+
+
+        return view('products.index', compact('categoryProducts', 'topProducts', 'selectedProduct'));
     }
 
-    /**
-     * Get specific product
-     */
-    public function show($id)
+
+    public function indexDetail(Request $request)
     {
-        $product = Product::getProduct($id);
+        $id = $request->input('product_id');
 
-        return response()->json([
-            'status' => 'success',
-            'data' => $product
-        ]);
+        $response = Http::get("https://fakestoreapi.com/products/{$id}");
+
+        if ($response->successful()) {
+            $productData = $response->json();
+
+            $selectedProduct = [$productData];
+
+            $allProducts = Http::get("https://fakestoreapi.com/products")->json();
+            $products = collect($allProducts);
+
+            $categoryProducts = $products->whereIn('id', [9, 2, 15, 8])->values();
+            $topProducts = $products->whereIn('id', [5, 6, 12, 16, 9, 10])->values();
+
+            $showModal = true;
+
+            return view('products.index', compact('categoryProducts', 'topProducts', 'selectedProduct', 'showModal'));
+        } else {
+            return back()->with('error', 'Produk tidak ditemukan.');
+        }
     }
 
-    /**
-     * Get products by category
-     */
     public function getByCategory($category)
     {
-        $products = Product::getProductsByCategory($category);
+        $response = Http::get("https://fakestoreapi.com/products/category/{$category}");
 
-        return response()->json([
-            'status' => 'success',
-            'category' => $category,
-            'data' => $products
-        ]);
+        if ($response->failed()) {
+            abort(404, 'Category not found');
+        }
+
+
+        $products = $response->json();
+
+
+        return view('products.category', compact('products', 'category'));
     }
 
-    /**
-     * Get all categories
-     */
-    public function categories()
-    {
-        $categories = Product::getCategories();
 
-        return response()->json([
-            'status' => 'success',
-            'data' => $categories
-        ]);
-    }
+//     public function show($id)
+//     {
+//         $product = Product::getProduct($id);
+
+//         return response()->json([
+//             'status' => 'success',
+//             'data' => $product
+//         ]);
+//     }
+
+
+//     public function getByCategory($category)
+//     {
+//         $products = Product::getProductsByCategory($category);
+
+//         return response()->json([
+//             'status' => 'success',
+//             'category' => $category,
+//             'data' => $products
+//         ]);
+//     }
+
+
+//     public function categories()
+//     {
+//         $categories = Product::getCategories();
+
+//         return response()->json([
+//             'status' => 'success',
+//             'data' => $categories
+//         ]);
+//     }
 }

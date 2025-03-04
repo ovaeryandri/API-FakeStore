@@ -12,10 +12,10 @@ class Product extends Model
     /**
      * Get all products
      */
-    public static function getAllProducts()
-    {
-        return Http::get("https://fakestoreapi.com/products")->json();
-    }
+    // public static function getAllProducts()
+    // {
+    //     return Http::get("https://fakestoreapi.com/products")->json();
+    // }
 
     /**
      * Get single product
@@ -28,16 +28,16 @@ class Product extends Model
     /**
      * Get products in specific category
      */
-    public static function getProductsByCategory($category)
-    {
-        return Http::get("https://fakestoreapi.com/products/category/{$category}")->json();
-    }
+    // public static function getProductsByCategory($category)
+    // {
+    //     return Http::get("https://fakestoreapi.com/products/category/{$category}")->json();
+    // }
 
     /**
      * Get all product categories
      */
-    public static function getCategories()
-    {
-        return Http::get("https://fakestoreapi.com/products/categories")->json();
-    }
+    // public static function getCategories()
+    // {
+    //     return Http::get("https://fakestoreapi.com/products/categories")->json();
+    // }
 }
